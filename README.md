@@ -29,3 +29,9 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+
+-NB: Continue here
+
+```
+https://staging.bahdcasts.com/courses/adonis-4-from-scratch-to-saas/updating-todos
+```
