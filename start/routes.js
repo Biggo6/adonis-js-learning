@@ -14,12 +14,30 @@
 */
 
 const Todo = use('App/Models/Todo')
-
+const User = use('App/Models/User')
+const SpreadSheet = use('SpreadSheet')
 const Route = use('Route')
 
-Route.get('/', 'TodoController.index');
+Route.on('/').render('index');
+Route.get('/dashboard', 'TodoController.index').middleware('auth')
 Route.get('/todos/delete/:id', 'TodoController.destroy');
 Route.get('/todos/edit/:id', 'TodoController.edit');
-Route.post('/', 'TodoController.store');
+Route.post('/', 'TodoController.store').middleware('auth')
 
+
+
+
+
+Route.group(() => {
+    Route.get('/signup', 'UserController.signup')
+    Route.post('/signup', 'UserController.store').validator('SignUpUser')
+    Route.get('/signin', 'UserController.signin')
+    Route.post('/signin', 'UserController.login')
+}).middleware('redAuth')
+
+
+Route.get('/logout', async ({ auth, response }) => {
+    await auth.logout()
+    return response.redirect('/')
+})
 

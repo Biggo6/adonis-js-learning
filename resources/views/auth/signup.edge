@@ -1,0 +1,52 @@
+@layout('layouts.app')
+
+@section('title')
+    SignUp
+@endsection
+
+@section('content')
+
+
+@if(flashMessage('notification'))
+<span class="alert-info mb-12">
+    {{ flashMessage('notification') }}
+</span>
+@endif
+
+
+<form class="col-md-5" method="POST" action="{{route('UserController.store')}}">
+
+    {{ csrfField() }}
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Username</label>
+    <input type="text"  name="username" value="{{old('username', '')}}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Username">
+        @if(hasErrorFor('username'))
+            <span class="text-danger">
+                {{ getErrorFor('username') }}
+            </span>
+        @endif
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" name="email" value="{{old('email', '')}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+      @if(hasErrorFor('email'))
+        <span class="text-danger">
+            {{ getErrorFor('email') }}
+        </span>
+    @endif
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" name="password" value="{{old('password', '')}}" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      @if(hasErrorFor('password'))
+    <span class="text-danger">
+        {{ getErrorFor('password') }}
+    </span>
+@endif
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@endsection

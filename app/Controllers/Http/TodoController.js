@@ -5,10 +5,14 @@ const Todo = use('App/Models/Todo');
 const { validateAll } = use('Validator');
 
 class TodoController {
-    async index({view}) {
-        
-        const todos = await Todo.all();
+    async index({ view, auth }) {
 
+
+        const todos = await auth.user.todos().fetch();
+
+        console.log(todos)
+
+    
         return view.render('home', {
             todos: todos.toJSON()
         })
@@ -42,7 +46,7 @@ class TodoController {
 
     }
 
-    async store({ request, response, session }) {
+    async store({ request, response, session, auth }) {
         const body = request.all();
 
         // validate the data
@@ -62,7 +66,7 @@ class TodoController {
             return response.redirect('/')
         }
 
-        await Todo.create({
+        const todo = await auth.user.todos().create({
             text: body.text
         });
 
@@ -70,7 +74,7 @@ class TodoController {
             notification: 'Todo created successfully'
         })
 
-        return response.redirect('/')
+        return response.redirect('/dashboard')
     }
 }
 

@@ -18,6 +18,10 @@ class User extends Model {
     })
   }
 
+  todos() {
+     return this.hasMany('App/Models/Todo');
+  }
+
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or
